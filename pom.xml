@@ -52,7 +52,8 @@
 			<artifactId>vertx-web</artifactId>
 			<version>${vertx.version}</version>
 		</dependency>
-		<!-- Postgres Dependency -->
+		<!-- Postgres Dependency - driver utilized in application.properties 
+		file to make my db connection  -->
 		 <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
