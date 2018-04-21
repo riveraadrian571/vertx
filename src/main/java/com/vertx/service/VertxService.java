@@ -1,20 +1,27 @@
 package com.vertx.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.vertx.dto.ShapeDTO;
+import com.vertx.entity.ShapeEntity;
+import com.vertx.repository.ShapeRepository;
 
 import io.vertx.core.json.Json;
 import io.vertx.ext.web.RoutingContext;
 
 @Component
 public class VertxService {
+//	@Autowired
+//	ShapeRepository shapeRepository;
+	
 	//create
 	public void saveOne(RoutingContext routingContext){
 		System.out.println("SAVEONE METHOD: SERVICE CLASS");	
 		//decode into dto
-		ShapeDTO shapeDTO = Json.decodeValue(routingContext.getBodyAsString(), ShapeDTO.class);
-		System.out.println("here is the shape \n" + shapeDTO.toString());
+		ShapeEntity shapeEntity = Json.decodeValue(routingContext.getBodyAsString(), ShapeEntity.class);
+		System.out.println("*******here is the shapeDTO \n" + shapeEntity.toString());
+		//shapeRepository.save(shapeEntity);
 		//throw into database
 		//dbexecutor
 	}

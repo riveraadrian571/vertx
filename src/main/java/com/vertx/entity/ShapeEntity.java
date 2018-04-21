@@ -1,17 +1,32 @@
-package com.vertx.dto;
+package com.vertx.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import io.vertx.core.json.Json;
 
-public class ShapeDTO {
-	
+@Entity
+@Table(name="sample")
+public class ShapeEntity {
+
+	@Id @GeneratedValue
+	@Column(name="shape_id")
 	private Integer shapeId;
-	
+
+	@Column(name="shape_name")
 	private String shapeName;
 	
+	@Column(name="number_sides")
 	private Integer numberSides;
 	
+	@Column(name="shape_color")
 	private String shapeColor;
 
+	public ShapeEntity(){}
+	
 	public Integer getShapeId() {
 		return shapeId;
 	}
@@ -48,5 +63,4 @@ public class ShapeDTO {
 	public String toString() {
 		return Json.encodePrettily(this);
 	}
-
 }
