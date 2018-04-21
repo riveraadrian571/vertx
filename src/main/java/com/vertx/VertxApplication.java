@@ -13,12 +13,26 @@ public class VertxApplication {
 
 	@Autowired
 	StaticServer staticServer;
+	
+//	@Autowired
+//	Vertx vertx;
 
 	// deploys verticle before launching spring boot
 	@PostConstruct
 	public void deployVerticle() {
+		
+		
+		
 		//Vertx.vertx().deployVerticle(staticServer);
 		Vertx.vertx().deployVerticle(staticServer, res -> {
+			if (Vertx.vertx()==null)
+			{
+				System.out.println("vertx is NULL dude idk why");
+			}
+			else
+			{
+				System.out.println("vertx is not null and launching");
+			}
 			  if (res.succeeded()) {
 			    System.out.println("Deployment id is: " + res.result());
 			  } else {

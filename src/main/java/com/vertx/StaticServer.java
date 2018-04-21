@@ -10,6 +10,7 @@ import io.vertx.core.Future;
 import io.vertx.core.json.Json;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
+import io.vertx.ext.web.handler.BodyHandler;
 
 @Component
 public class StaticServer extends AbstractVerticle {
@@ -42,9 +43,19 @@ public class StaticServer extends AbstractVerticle {
   
   @Override
   public void start(Future <Void> future) throws Exception {
+	  if (vertx==null)
+	  {
+		  System.out.println("*****VERTEX NULL -> Class: Static Server");
+	  }
+	  else
+	  {
+		  System.out.println("VERTEX NOT NULL -> Class: Static Server");
+	  }
+	  
+	  
 	// Create a router object.
 	  Router router = Router.router(vertx);
-
+	  router.route().handler(BodyHandler.create());
 	  // Bind "/" to our hello message - so we are still compatible.
 //	  router.route("/").handler(routingContext -> {
 //	    HttpServerResponse response = routingContext.response();
@@ -53,7 +64,7 @@ public class StaticServer extends AbstractVerticle {
 //	        .end("<h1>Hello from my first Vert.x 3 application</h1>");
 //	  });
 	  
-	  router.get("/saveOne").handler(this::saveOne);
+	  router.post("/saveOne").handler(this::saveOne);
 	  router.get("/getOne").handler(this::getOne);
 	  router.get("/api/whiskies").handler(this::getAll);
 	  // Create the HTTP server and pass the "accept" method to the request handler.
@@ -67,6 +78,7 @@ public class StaticServer extends AbstractVerticle {
 	          result -> {
 	            if (result.succeeded()) {
 	            	future.complete();
+	            	System.out.println("**** vertx is up and running ****");
 	            } else {
 	            	future.fail(result.cause());
 	            }
