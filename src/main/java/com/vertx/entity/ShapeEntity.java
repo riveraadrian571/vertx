@@ -3,7 +3,9 @@ package com.vertx.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import io.vertx.core.json.Json;
@@ -12,8 +14,10 @@ import io.vertx.core.json.Json;
 @Table(name="sample")
 public class ShapeEntity {
 
-	@Id @GeneratedValue
-	@Column(name="shape_id")
+	@Id 
+	@SequenceGenerator(name="pk_sequence",sequenceName="sample_seq", allocationSize=1)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="pk_sequence")	
+	@Column(name="shape_id", nullable=false)
 	private Integer shapeId;
 
 	@Column(name="shape_name")
@@ -26,6 +30,13 @@ public class ShapeEntity {
 	private String shapeColor;
 
 	public ShapeEntity(){}
+	
+	public ShapeEntity(Integer shapeId, String shapeName, Integer numberSides, String shapeColor) {
+		this.shapeId = shapeId;
+		this.shapeName = shapeName;
+		this.numberSides = numberSides;
+		this.shapeColor = shapeColor;
+	}
 	
 	public Integer getShapeId() {
 		return shapeId;

@@ -22,51 +22,17 @@ public class StaticServer extends AbstractVerticle {
   VertxService vertxService;
   
   Integer port = 8023;
-
-//  @Override
-//  public void start(Future <Void> future) throws Exception {
-//    vertx
-//    	.createHttpServer()
-//    	.requestHandler(request -> {
-//    		request.response().end("<h1> I am Vertx and running at port " + port + "</h1>");
-//    	})
-//    	.listen(port, result -> {
-//    		if (result.succeeded()) {
-//    			useRouter();
-//    			future.complete();
-//    		}
-//    		else{
-//    			future.fail(result.cause());
-//    		}
-//    	});
-//  }
   
   @Override
   public void start(Future <Void> future) throws Exception {
-	  if (vertx==null)
-	  {
-		  System.out.println("*****VERTEX NULL -> Class: Static Server");
-	  }
-	  else
-	  {
-		  System.out.println("VERTEX NOT NULL -> Class: Static Server");
-	  }
-	  
-	  
-	// Create a router object.
+	  // Create a router object.
 	  Router router = Router.router(vertx);
 	  router.route().handler(BodyHandler.create());
-	  // Bind "/" to our hello message - so we are still compatible.
-//	  router.route("/").handler(routingContext -> {
-//	    HttpServerResponse response = routingContext.response();
-//	    response
-//	        .putHeader("content-type", "text/html")
-//	        .end("<h1>Hello from my first Vert.x 3 application</h1>");
-//	  });
 	  
 	  router.post("/saveOne").handler(this::saveOne);
 	  router.get("/getOne").handler(this::getOne);
 	  router.get("/api/whiskies").handler(this::getAll);
+	  
 	  // Create the HTTP server and pass the "accept" method to the request handler.
 	  vertx
 	      .createHttpServer()
@@ -100,4 +66,29 @@ public class StaticServer extends AbstractVerticle {
 	  .end(Json.encodePrettily("blach "));
   }
   
+//@Override
+//public void start(Future <Void> future) throws Exception {
+//  vertx
+//  	.createHttpServer()
+//  	.requestHandler(request -> {
+//  		request.response().end("<h1> I am Vertx and running at port " + port + "</h1>");
+//  	})
+//  	.listen(port, result -> {
+//  		if (result.succeeded()) {
+//  			useRouter();
+//  			future.complete();
+//  		}
+//  		else{
+//  			future.fail(result.cause());
+//  		}
+//  	});
+//}
+  
+  // Bind "/" to our hello message - so we are still compatible.
+  //  router.route("/").handler(routingContext -> {
+  //    HttpServerResponse response = routingContext.response();
+  //    response
+  //        .putHeader("content-type", "text/html")
+  //        .end("<h1>Hello from my first Vert.x 3 application</h1>");
+  //  });
 }
