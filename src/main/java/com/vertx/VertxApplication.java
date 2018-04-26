@@ -6,26 +6,47 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.vertx.verticle.EventBusVerticle;
+import com.vertx.verticle.RestVerticle;
+
+import io.vertx.core.AbstractVerticle;
+import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 
 @SpringBootApplication
-public class VertxApplication {
+public class VertxApplication  {
+	//service discovery: https://piotrminkowski.wordpress.com/2017/08/24/asynchronous-microservices-with-vert-x/
+	
+	//both objects are autowired due to the @Component annotations in both classes
+	
+	@Autowired
+	RestVerticle restVerticle;
 
 	@Autowired
-	StaticServer staticServer;
+	EventBusVerticle eventBusVerticle;
 
-	// @Autowired
-	// Vertx vertx;
-
-	// deploys verticle before launching spring boot
+	// deploys verticle before launching spring boot due to the function of the PostConstruct
 	@PostConstruct
 	public void deployVerticle() {
-		// Vertx.vertx().deployVerticle(staticServer);
-		Vertx.vertx().deployVerticle(staticServer, res -> {
+		Vertx vertx = Vertx.vertx();
+		
+		vertx.deployVerticle(restVerticle, res -> {
 			if (res.succeeded()) {
-				System.out.println("Deployment id is: " + res.result());
+				System.out.println("*** Deployment REST is successful and Deployment id is: " + res.result() + " ***");
+				
+			} 
+			else {
+				System.out.println("Deployment REST Verticle failed!");
+				
+			}
+		});
+		vertx.deployVerticle(eventBusVerticle, res -> {
+			if (res.succeeded()) {
+				System.out.println("*** Deployment eventBus is successful and Deployment id is: " + res.result() + " ***");
+				
 			} else {
-				System.out.println("Deployment failed!");
+				System.out.println("Deployment Event Bus failed!");
+				
 			}
 		});
 	}

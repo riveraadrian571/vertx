@@ -74,6 +74,19 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>5.2.3.Final</version>
 		</dependency> -->  
+		<!-- Mockito Unit Test Dependencies -->
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>1.7.3</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
+			<version>1.7.3</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

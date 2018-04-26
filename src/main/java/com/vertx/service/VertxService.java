@@ -6,70 +6,42 @@ import org.springframework.stereotype.Component;
 
 import com.vertx.dto.ShapeDTO;
 import com.vertx.entity.ShapeEntity;
-import com.vertx.repository.ShapeRepository;
 
-import io.vertx.core.Handler;
-import io.vertx.core.Vertx;
+import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.Json;
 import io.vertx.ext.web.RoutingContext;
 
 @Component
 public class VertxService {
-	@Autowired
-	ShapeRepository shapeRepository;
+	//https://github.com/lbovet/vertx-rest-storage/blob/master/src/main/java/org/swisspush/reststorage/util/StatusCode.java
+//	  OK(200, "OK"),
+//    FOUND(302, "Found"),
+//    NOT_MODIFIED(304, "Not Modified"),
+//    BAD_REQUEST(400, "Bad Request"),
+//    NOT_FOUND(404, "Not Found"),
+//    METHOD_NOT_ALLOWED(405, "Method Not Allowed"),
+//    INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
+//	  CONFLICT(409, "Conflict");
 	
 	@Autowired
-	Vertx vertx;
-	
-	
-	
-	//save a shapeS
-	public void saveOne(RoutingContext routingContext){
-		
-		System.out.println("SAVEONE METHOD: SERVICE CLASS");	
-		ShapeDTO shapeDTO = Json.decodeValue(routingContext.getBodyAsString(), ShapeDTO.class);
-		System.out.println("*******here is the shapeDTO **** \n" + shapeDTO.toString());
-		//create a Shape Entity for saving into db
-		ShapeEntity shapeEntity = new ShapeEntity();
-		//copy the dto to the entity 
-		BeanUtils.copyProperties(shapeDTO, shapeEntity);
-		System.out.println("*******here is the shapeEntity before saving to the db **** \n" + shapeEntity.toString());
-		//eventually will throw the entity into dbexecutor class
-		//throw into database
-		
-		//doSave(shapeEntity);
-		
-//		vertx.executeBlocking(future -> {
-			shapeRepository.save(shapeEntity);
-//		}, res -> {
-//			if (res.succeeded()) {
-//				
-//			}
-//		}arg1);
-		//shapeRepository.save(shapeEntity);
-	}
-	
-	public void doSave(ShapeEntity shapeEntity, Handler<ShapeEntity> handler)
-	{
-		
-	}
-	
-	//read
-	public void getOne(RoutingContext routingContext) {
-		System.out.println("GETONE METHOD: SERVICE CLASS");
-		//decode into dto
-		
-		//give to front end in json format
-	}
-	
-	//update one
-	public void updateOne(RoutingContext routingContext) {
-		System.out.println("UPDATEONE METHOD: SERVICE CLASS");
-	}
-	
-	//delete
-	public void deleteOne(RoutingContext routingContext) {
-		System.out.println("DELETEONE METHOD: SERVICE CLASS");
-	}
+	DbService dbService;
 
+	public void saveOne(RoutingContext routingContext) {	
+		HttpServerResponse res = routingContext.response();
+		ShapeDTO shapeDTO = Json.decodeValue(routingContext.getBodyAsString(), ShapeDTO.class);
+		if (shapeDTO!=null) {
+			//res.setStatusCode(200).putHeader("content-type", "application/json").end();
+			//create a Shape Entity for saving into db
+			ShapeEntity shapeEntity = new ShapeEntity();
+			//copy the dto to the entity 
+			BeanUtils.copyProperties(shapeDTO, shapeEntity);
+			//throw into database
+			dbService.save(shapeEntity, res);
+		}
+		else if (shapeDTO==null)
+		{
+			res.setStatusCode(404).putHeader("content-type", "application/json").end();
+		}
+		
+	}
 }
