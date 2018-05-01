@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.vertx.dto.ShapeDTO;
 import com.vertx.entity.ShapeEntity;
-
+import com.vertx.util.*;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.Json;
 import io.vertx.ext.web.RoutingContext;
@@ -40,7 +40,9 @@ public class VertxService {
 		}
 		else if (shapeDTO==null)
 		{
-			res.setStatusCode(404).putHeader("content-type", "application/json").end();
+			res.headers().add("content-type", "application/json");
+			res.setStatusCode(StatusCode.NOT_FOUND.getStatusCode()).setStatusMessage("Shape DTO came back null").end();
+			//res.setStatusCode(404).putHeader("content-type", "application/json").end();
 		}
 		
 	}

@@ -41,6 +41,8 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+
 		<!-- Vertx Dependencies -->
 		<dependency>
 			<groupId>io.vertx</groupId>
@@ -64,16 +66,10 @@
 			<artifactId>flyway-core</artifactId>
 			<version>5.0.7</version>
 		</dependency>
-		<!-- <dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>4.1.4.Final</version>
-		</dependency> 
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.2.3.Final</version>
-		</dependency> -->  
+		<!-- <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-core</artifactId> 
+			<version>4.1.4.Final</version> </dependency> <dependency> <groupId>org.hibernate</groupId> 
+			<artifactId>hibernate-entitymanager</artifactId> <version>5.2.3.Final</version> 
+			</dependency> -->
 		<!-- Mockito Unit Test Dependencies -->
 		<dependency>
 			<groupId>org.powermock</groupId>
@@ -87,6 +83,14 @@
 			<version>1.7.3</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- Utilizes objects such as RunTestOnContext to run tests -->
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-unit</artifactId>
+			<version>${vertx.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

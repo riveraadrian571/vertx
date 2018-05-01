@@ -5,12 +5,13 @@ import org.junit.Test;
 public class ShapeDTOTest {
 	
 	@Test
-	public void testShapeDTO() {
-		ShapeDTO dto = new ShapeDTO();
-		dto.setShapeId(1);
-		dto.setNumberSides(3);
-		dto.setShapeColor("red");
-		dto.setShapeName("triangle");
-		dto.toString();
+	public void test() {
+		ShapeDTO shapeTest = new ShapeDTO();
+		shapeTest.setShapeId(1);
+		shapeTest.setNumberSides(2);
+		shapeTest.setShapeColor("red");
+		shapeTest.setShapeName("fake shape");
+		shapeTest.toString();
 	}
+
 }
