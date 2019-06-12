@@ -17,7 +17,7 @@ pipeline {
 
         stage ('Build') {
             steps {
-                sh 'mvn clean packagefsdfdsf' 
+                sh 'mvn clean package' 
             }
 			post {
                 success {
