@@ -7,21 +7,15 @@ pipeline {
     stages {
         stage ('Initialize') {
             steps {
-                bat '''
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-                '''
+                bat 'echo step 1 idk'
+                bat 'echo "PATH = ${PATH}"'
+                bat 'echo "M2_HOME = ${M2_HOME}"'
             }
         }
 
         stage ('Build') {
             steps {
                 bat 'mvn -Dmaven.test.failure.ignore=true install' 
-            }
-            post {
-                success {
-                    junit 'target/surefire-reports/**/*.xml' 
-                }
             }
         }
     }
