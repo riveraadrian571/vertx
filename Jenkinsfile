@@ -17,8 +17,8 @@ pipeline {
 
         stage ('Build') {
             steps {
-                echo 'create'
-			}
+                sh 'mvn -Dmaven.test.failure.ignore=true install' 
+            }
         }
     }
 }
