@@ -6,11 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.vertx.verticle.EventBusSender;
 import com.vertx.verticle.EventBusVerticle;
 import com.vertx.verticle.RestVerticle;
 
-import io.vertx.core.AbstractVerticle;
-import io.vertx.core.Future;
 import io.vertx.core.Vertx;
 
 @SpringBootApplication
@@ -24,28 +23,41 @@ public class VertxApplication  {
 
 	@Autowired
 	EventBusVerticle eventBusVerticle;
+	
+	@Autowired
+	EventBusSender eventBusSender;
 
 	// deploys verticle before launching spring boot due to the function of the PostConstruct
 	@PostConstruct
 	public void deployVerticle() {
 		Vertx vertx = Vertx.vertx();
 		
-		vertx.deployVerticle(restVerticle, res -> {
-			if (res.succeeded()) {
-				System.out.println("*** Deployment REST is successful and Deployment id is: " + res.result() + " ***");
-				
-			} 
-			else {
-				System.out.println("Deployment REST Verticle failed!");
-				
-			}
-		});
+//		vertx.deployVerticle(restVerticle, res -> {
+//			if (res.succeeded()) {
+//				System.out.println("*** Deployment REST is successful and Deployment id is: " + res.result() + " ***");
+//				
+//			} 
+//			else {
+//				System.out.println("Deployment REST Verticle failed!");
+//				
+//			}
+//		});
 		vertx.deployVerticle(eventBusVerticle, res -> {
 			if (res.succeeded()) {
 				System.out.println("*** Deployment eventBus is successful and Deployment id is: " + res.result() + " ***");
 				
 			} else {
 				System.out.println("Deployment Event Bus failed!");
+				
+			}
+		});
+		
+		vertx.deployVerticle(eventBusSender, res -> {
+			if (res.succeeded()) {
+				System.out.println("*** Deployment eventBusSender is successful and Deployment id is: " + res.result() + " ***");
+				
+			} else {
+				System.out.println("Deployment Event Bus failed for sender	!");
 				
 			}
 		});
