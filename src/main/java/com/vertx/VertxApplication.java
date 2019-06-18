@@ -18,11 +18,11 @@ public class VertxApplication  {
 	
 	//both objects are autowired due to the @Component annotations in both classes
 	
-	@Autowired
-	RestVerticle restVerticle;
-
-	@Autowired
-	EventBusVerticle eventBusVerticle;
+//	@Autowired
+//	RestVerticle restVerticle;
+//
+//	@Autowired
+//	EventBusVerticle eventBusVerticle;
 	
 	@Autowired
 	EventBusSender eventBusSender;
@@ -42,15 +42,15 @@ public class VertxApplication  {
 //				
 //			}
 //		});
-		vertx.deployVerticle(eventBusVerticle, res -> {
-			if (res.succeeded()) {
-				System.out.println("*** Deployment eventBus is successful and Deployment id is: " + res.result() + " ***");
-				
-			} else {
-				System.out.println("Deployment Event Bus failed!");
-				
-			}
-		});
+//		vertx.deployVerticle(eventBusVerticle, res -> {
+//			if (res.succeeded()) {
+//				System.out.println("*** Deployment eventBus is successful and Deployment id is: " + res.result() + " ***");
+//				
+//			} else {
+//				System.out.println("Deployment Event Bus failed!");
+//				
+//			}
+//		});
 		
 		vertx.deployVerticle(eventBusSender, res -> {
 			if (res.succeeded()) {

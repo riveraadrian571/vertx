@@ -14,6 +14,7 @@ public class EventBusVerticle extends AbstractVerticle{
 		super.start(startFuture);
 		//event listener for incoming messages
 		vertx.eventBus().<JsonObject>consumer("VertxSampleEB.VERTEX__GET_HELLO_MSG").handler(this::consumeMsg);
+		vertx.eventBus().<JsonObject>consumer("VertxSampleEB.anotherMS").handler(this::consumeMsg);
 	}
 	
 	public void consumeMsg(Message<JsonObject> message) {
